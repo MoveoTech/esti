@@ -14,8 +14,7 @@ class App extends React.Component {
     // Default state
     this.state = {
       data: {},
-      context: {
-      },
+      context: {},
       itemName: "",
       name: "",
     };
@@ -33,7 +32,7 @@ class App extends React.Component {
     })
     });
     
-  monday.api(`query { me { name } boards { name  items { name created_at column_values { title text } } } }`).then((res) => {
+  monday.api(`query { me { name } boards { name  items { name created_at column_values { title text  } } } }`).then((res) => {
       this.setState({ data: res.data });
       console.log(res);
     });
