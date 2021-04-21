@@ -4,9 +4,7 @@ body {
 }
 
 .App {
-  height: 50vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: calc(100vh - 40px);
+  width: 93%;
+  padding: 33px 21px 0 27px;
 }
