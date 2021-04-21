@@ -4,6 +4,7 @@ import mondaySdk from "monday-sdk-js";
 import "monday-ui-react-core/dist/main.css"
 //Explore more Monday React Components here: https://style.monday.com/
 import AttentionBox from "monday-ui-react-core/dist/AttentionBox.js"
+import { searchByTitle } from "./utils/search";
 
 const monday = mondaySdk();
 
@@ -13,7 +14,7 @@ class App extends React.Component {
 
     // Default state
     this.state = {
-      data: {},
+      items: [],
       context: {},
       itemName: "",
       name: "",
@@ -28,13 +29,13 @@ class App extends React.Component {
 
       monday.api(`query { items(ids:${+this.state.context.itemId}) { name } }`).then((res)=> {
       this.setState({itemName: res.data.items[0].name});
-      console.log(this.state.itemName);
+      // console.log(this.state.itemName);
     })
     });
     
-  monday.api(`query { me { name } boards { name  items { name created_at column_values { title text  } } } }`).then((res) => {
-      this.setState({ data: res.data });
-      console.log(res);
+  monday.api(`query { items(limit: 2500) { name id } }`).then( async (res) => {
+      this.setState({ items: await searchByTitle(this.state.itemName, res.data)});
+      
     });
   }
 
