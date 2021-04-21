@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 export const OverviewPart = () => {
     return (
-        <Title>Overview</Title>
+        <div>
+            <Title>Overview</Title>
+        </div>
     );
 }
 

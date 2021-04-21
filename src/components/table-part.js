@@ -3,11 +3,11 @@ import styled from "styled-components";
 
 export const TablePart = () => {
     return (
-        <Title>Best Matches</Title>
+        <div>
+            <Title>Best Matches</Title>
+        </div>
     );
 }
-
-
 
 const Title = styled("div")`
     color: #5559DF;
