@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { TableRow } from "./table-row";
 
-export const TablePart = () => {
+export const TablePart = ({data}) => {
     return (
         <div>
             <Title>Best Matches</Title>
+            {
+                data.map(item => {
+                    return (<TableRow row={item}></TableRow>);
+                })
+            }
         </div>
     );
 }
