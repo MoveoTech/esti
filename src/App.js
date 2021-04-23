@@ -1,11 +1,16 @@
 import React from "react";
 import "./App.css";
-import "monday-ui-react-core/dist/main.css"
+import "monday-ui-react-core/dist/main.css";
 //Explore more Monday React Components here: https://style.monday.com/
-import AttentionBox from "monday-ui-react-core/dist/AttentionBox.js"
+import AttentionBox from "monday-ui-react-core/dist/AttentionBox.js";
 import { searchByName } from "./utils/search";
-import { getContext, getFullItems, getItemName, getSkinnyItems } from "./services/monday.api";
-
+import {
+  getContext,
+  getFullItems,
+  getItemName,
+  getSkinnyItems,
+} from "./services/monday.api";
+import { formatData } from "./utils/utils";
 
 class App extends React.Component {
   constructor(props) {
@@ -13,36 +18,41 @@ class App extends React.Component {
 
     // Default state
     this.state = {
-      items: [],
+      data: [],
       context: {},
       itemName: "",
     };
   }
 
   async componentDidMount() {
-    await getContext().then( async ({ data })=> {
-      this.setState({context: data});
-      await getItemName(data.itemId).then( async ({ data : { items }}) => {
+    await getContext().then(async ({ data }) => {
+      this.setState({ context: data });
+      await getItemName(data.itemId).then(async ({ data: { items } }) => {
         const name = items[0].name;
-        this.setState({itemName: items[0].name});
-        await getSkinnyItems(1000).then( async ({ data : { items } }) => {
-          const skinnyItems = await searchByName(name, items, 10);
-          console.log(skinnyItems);
-          await getFullItems(skinnyItems).then( async ({data: { items }}) => {
-            this.setState({items});
+        this.setState({ itemName: items[0].name });
+        await getSkinnyItems(500000).then(async ({ data: { items } }) => {
+          const skinnyItems = await searchByName(name, items, 20);
+          await getFullItems(skinnyItems).then(async ({ data: { items } }) => {
+            this.setState({
+              data: await formatData(this.state.itemName, items),
+            });
           });
         });
       });
     });
   }
 
-  render() {return (<div className="App">
-      <AttentionBox
-        title={"Hello Moveo Group!" }
-        text= {`Item name: ${this.state.itemName} ${this.state.items.length}`}
-        type="success"
-      />
-    </div>);}
+  render() {
+    return (
+      <div className="App">
+        <AttentionBox
+          title={"Hello Moveo Group!"}
+          text={`Item name: ${this.state.itemName}`}
+          type="success"
+        />
+      </div>
+    );
+  }
 }
 
 // export const App = () => {
@@ -79,7 +89,6 @@ class App extends React.Component {
 
 //     fetchData();
 //   }, [])
-
 
 //   return (<div className="App">
 //       <AttentionBox
