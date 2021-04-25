@@ -21,6 +21,7 @@ export const formatItems = async (items) => {
           title: i.name,
           board: i.board.name,
           value: value ? +value : "Unset",
+          createdAt: i.created_at,
           creator: {
             name: i.creator.name,
             photo: i.creator.photo_thumb,
@@ -64,7 +65,7 @@ export const calculateAvg = (items) => {
   const average = sum / amount;
 
   // return rounded average
-  return average.toFixed(2);
+  return Math.round(average);
 };
 
 export const formatData = async (name, items) => {

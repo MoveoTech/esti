@@ -3,16 +3,18 @@ import styled from "styled-components";
 
 export const OverviewPart = ({ data }) => {
   return (
-    <div>
+    <OverviewContainer>
       <Title>Overview</Title>
       <OverviewData>
         <Matches>{`${data.total} Total Matches`}</Matches>
         <CalcField>{`${data.average}h Average`}</CalcField>
         <CalcField>{`${data.median}h Median`}</CalcField>
       </OverviewData>
-    </div>
+    </OverviewContainer>
   );
 };
+
+const OverviewContainer = styled("div")``;
 
 const Title = styled("div")`
   color: #fdab3d;
@@ -21,7 +23,6 @@ const Title = styled("div")`
 
 const OverviewData = styled("div")`
   background: #f5f6f8;
-  width: 100%;
   height: 42px;
   margin-top: 8px;
   padding: 9px;

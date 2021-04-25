@@ -52,7 +52,7 @@ export const App = () => {
       await fetchContext().then(async ({ itemId }) => {
         await fetchItemName(itemId).then(async (res) => {
           itemName = res;
-          await fetchItems(res, 20000).then(async (res) => {
+          await fetchItems(res, 200000).then(async (res) => {
             await fetchFullItmes(res).then(async ({ items }) => {
               setData(await formatData(itemName, items));
               setFetching(false);
