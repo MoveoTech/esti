@@ -1,8 +1,8 @@
 import { searchByColumnName, sortByWeight } from "./search";
 
 export const formatTitle = (title) => {
-  const formattedTitle = title.split(" ").join(" | '");
-  return `'${formattedTitle}`;
+  const formattedTitle = title.split(" ").join(" | =");
+  return `=${formattedTitle}`;
 };
 
 export const filterNumericColumns = (columns) => {
@@ -45,7 +45,7 @@ export const calculateMedian = (items) => {
   const median =
     values.length % 2 !== 0 ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2;
 
-  return median;
+  return Math.round(median);
 };
 
 export const calculateAvg = (items) => {
@@ -61,15 +61,17 @@ export const calculateAvg = (items) => {
   // get amount of values
   const amount = values.length;
 
-  // return average
-  return sum / amount;
+  const average = sum / amount;
+
+  // return rounded average
+  return average.toFixed(2);
 };
 
 export const formatData = async (name, items) => {
   const formattedItems = await formatItems(items);
   return {
     items: sortByWeight(name, formattedItems),
-    avg: calculateAvg(formattedItems),
+    average: calculateAvg(formattedItems),
     median: calculateMedian(formattedItems),
     total: formattedItems.length,
   };
