@@ -7,8 +7,12 @@ export const OverviewPart = ({ data }) => {
       <Title>Overview</Title>
       <OverviewData>
         <Matches>{`${data.total} Total Matches`}</Matches>
-        <CalcField>{`${data.average}h Average`}</CalcField>
-        <CalcField>{`${data.median}h Median`}</CalcField>
+        <CalcField>{`${
+          data.average === "Unset" ? data.average : `${data.average}h`
+        } Average`}</CalcField>
+        <CalcField>{`${
+          data.median === "Unset" ? data.median : `${data.median}h`
+        } Median`}</CalcField>
       </OverviewData>
     </OverviewContainer>
   );

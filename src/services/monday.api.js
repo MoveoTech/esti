@@ -26,6 +26,6 @@ export const getFullItems = async (items) => {
   const ids = items.map((item) => +item.item.id);
 
   return monday.api(
-    `query { items (ids: [${ids}]) { name created_at creator { name photo_thumb photo_thumb_small email } board { name } column_values { title text type } } }`
+    `query { items (ids: [${ids}]) { id name created_at creator { name photo_thumb photo_thumb_small email } board { name } column_values { title text type } } }`
   );
 };

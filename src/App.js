@@ -15,7 +15,9 @@ import { formatData } from "./utils/utils";
 import { Spinner } from "./components/spinner";
 
 export const App = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    items: [],
+  });
   const [fetching, setFetching] = useState(true);
 
   // data fetching //
@@ -52,7 +54,7 @@ export const App = () => {
       await fetchContext().then(async ({ itemId }) => {
         await fetchItemName(itemId).then(async (res) => {
           itemName = res;
-          await fetchItems(res, 200000).then(async (res) => {
+          await fetchItems(res, 300000).then(async (res) => {
             await fetchFullItmes(res).then(async ({ items }) => {
               setData(await formatData(itemName, items));
               setFetching(false);
@@ -66,13 +68,12 @@ export const App = () => {
   }, []);
 
   return (
-    <div className="App">
+    <div className="app">
       {fetching ? (
-        <div className="loader">
-          <Spinner />
-        </div>
+        <Spinner />
       ) : (
-        <div>
+        // <Spinner />
+        <div className="inner-wrapper">
           <OverviewPart
             data={{
               total: data.total,

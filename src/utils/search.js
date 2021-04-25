@@ -45,7 +45,7 @@ export const sortByWeight = (name, items) => {
     keys: [
       {
         name: "title",
-        weight: 2,
+        weight: 1,
       },
     ],
   };
@@ -54,5 +54,5 @@ export const sortByWeight = (name, items) => {
 
   const fuse = new Fuse(items, options, idx);
 
-  return fuse.search(name).map((i) => i.item);
+  return fuse.search(formatTitle(name)).map((i) => i.item);
 };

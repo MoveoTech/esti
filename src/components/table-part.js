@@ -4,14 +4,16 @@ import { TableRow } from "./table-row";
 
 export const TablePart = ({ data }) => {
   return (
-    <div>
+    <Table>
       <Title>Best Matches</Title>
       {data.map((item) => {
-        return <TableRow row={item}></TableRow>;
+        return <TableRow row={item} key={item.id}></TableRow>;
       })}
-    </div>
+    </Table>
   );
 };
+
+const Table = styled("div")``;
 
 const Title = styled("div")`
   color: #5559df;

@@ -18,6 +18,7 @@ export const formatItems = async (items) => {
       });
       if (typeof value !== "undefined")
         return {
+          id: i.id,
           title: i.name,
           board: i.board.name,
           value: value ? +value : "Unset",
