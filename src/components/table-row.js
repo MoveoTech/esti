@@ -23,7 +23,7 @@ export const TableRow = ({ row, index }) => {
     },
   });
 
-  const [showHover, setShowHover] = useState(true);
+  const [showHover, setShowHover] = useState(false);
 
   return (
     <div>
@@ -39,9 +39,9 @@ export const TableRow = ({ row, index }) => {
 
         <TitleContainer
           onMouseEnter={() => setShowHover(true)}
-          onMouseLeave={() => setShowHover(true)}>
+          onMouseLeave={() => setShowHover(false)}>
           <Avatar src={row.creator.photo} />
-          {showHover && index == 0 && <CustomBanner creator={row.creator}></CustomBanner>}
+          {showHover && <CustomBanner creator={row.creator}></CustomBanner>}
           <span>{row.title}</span>
         </TitleContainer>
 

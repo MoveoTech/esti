@@ -28,7 +28,7 @@ const Container = styled("div")`
         padding: 20px;
         grid-column-gap: 20px;
         background-color: white;
-        box-shadow: #000000 0px 4px 20px 0px;
+        box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
     }
 
     .banner .banner--content .banner--title {
