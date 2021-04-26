@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import * as moment from "moment";
+import { CustomBanner } from "./banner";
 
-export const TableRow = ({ row }) => {
+export const TableRow = ({ row, index }) => {
+
   moment.locale("en", {
     relativeTime: {
       future: "in %s",
@@ -21,6 +23,8 @@ export const TableRow = ({ row }) => {
     },
   });
 
+  const [showHover, setShowHover] = useState(true);
+
   return (
     <div>
       <Row>
@@ -33,9 +37,11 @@ export const TableRow = ({ row }) => {
           {moment(row.createdAt, "YYYYMMDDHHmmss").fromNow()}
         </TimeElapsed>
 
-        {/* <Avatar></Avatar> */}
-        <TitleContainer>
+        <TitleContainer
+          onMouseEnter={() => setShowHover(true)}
+          onMouseLeave={() => setShowHover(true)}>
           <Avatar src={row.creator.photo} />
+          {showHover && index == 0 && <CustomBanner creator={row.creator}></CustomBanner>}
           <span>{row.title}</span>
         </TitleContainer>
 
@@ -47,8 +53,12 @@ export const TableRow = ({ row }) => {
           {row.value === "Unset" ? row.value : `${row.value}h`}
         </ValueTime>
       </Row>
+
     </div>
   );
+
+
+
 };
 
 const Row = styled("div")`
@@ -102,6 +112,7 @@ const TitleContainer = styled("div")`
   display: flex;
   align-items: center;
   width: calc(100% / 2);
+  position: relative;
 `;
 
 const Avatar = styled("img")`

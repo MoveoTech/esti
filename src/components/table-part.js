@@ -6,8 +6,8 @@ export const TablePart = ({ data }) => {
   return (
     <Table>
       <Title>Best Matches</Title>
-      {data.map((item) => {
-        return <TableRow row={item} key={item.id}></TableRow>;
+      {data.map((item, index) => {
+        return <TableRow row={item} key={item.id} index={index}></TableRow>;
       })}
     </Table>
   );
