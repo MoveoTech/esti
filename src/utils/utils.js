@@ -1,4 +1,6 @@
 import { searchByColumnName, sortByWeight } from "./search";
+import { colors } from "../constants/colors";
+import _ from "lodash";
 
 export const formatTitle = (title) => {
   const formattedTitle = title.split(" ").join(" | =");
@@ -69,10 +71,38 @@ export const calculateAvg = (items) => {
   return Math.round(average);
 };
 
+const assignColorByBoard = (items) => {
+  const colorBoards = [];
+  const shuffledColors = _.shuffle(colors);
+
+  return items.map((item, idx) => {
+    const board = {
+      name: item.board,
+    };
+
+    const filteredColorBoards = colorBoards.filter(
+      (b) => b.name === board.name
+    );
+
+    if (filteredColorBoards.length > 0) {
+      board.color = filteredColorBoards[0].color;
+    } else {
+      board.color = shuffledColors[0];
+      shuffledColors.shift();
+      colorBoards.push(board);
+    }
+
+    return {
+      ...item,
+      board,
+    };
+  });
+};
+
 export const formatData = async (name, items) => {
   const formattedItems = await formatItems(items);
   return {
-    items: sortByWeight(name, formattedItems),
+    items: assignColorByBoard(sortByWeight(name, formattedItems)),
     average: calculateAvg(formattedItems),
     median: calculateMedian(formattedItems),
     total: formattedItems.length,

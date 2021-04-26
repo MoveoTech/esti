@@ -40,12 +40,10 @@ export const TableRow = ({ row }) => {
         </TitleContainer>
 
         <BoardLabelContainer>
-          <BoardLabel>{row.board}</BoardLabel>
+          <BoardLabel color={row.board.color}>{row.board.name}</BoardLabel>
         </BoardLabelContainer>
 
-        <ValueTime>
-          {row.value === "Unset" ? row.value : `${row.value}h`}
-        </ValueTime>
+        <ValueTime>{row.value === "Unset" ? "-" : `${row.value}h`}</ValueTime>
       </Row>
     </div>
   );
@@ -78,14 +76,14 @@ const BoardLabelContainer = styled("div")`
   width: fit-content;
   min-width: 100px;
   display: flex;
-  justify-content: center;
 `;
 
 const BoardLabel = styled("div")`
   height: 24px;
   padding-left: 6px;
   padding-right: 6px;
-  background-color: rgba(255, 203, 0, 0.3);
+  background-color: ${(props) => props.color};
+  color: whitesmoke;
   display: flex;
   align-items: center;
   border-radius: 4px;

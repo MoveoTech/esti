@@ -72,7 +72,6 @@ export const App = () => {
       {fetching ? (
         <Spinner />
       ) : (
-        // <Spinner />
         <div className="inner-wrapper">
           <OverviewPart
             data={{
