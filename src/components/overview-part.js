@@ -8,10 +8,10 @@ export const OverviewPart = ({ data }) => {
       <OverviewData>
         <Matches>{`${data.total} Total Matches`}</Matches>
         <CalcField>{`${
-          data.average === "Unset" ? data.average : `${data.average}h`
+          data.average === "Unset" ? "-" : `${data.average}h`
         } Average`}</CalcField>
         <CalcField>{`${
-          data.median === "Unset" ? data.median : `${data.median}h`
+          data.median === "Unset" ? "-" : `${data.median}h`
         } Median`}</CalcField>
       </OverviewData>
     </OverviewContainer>

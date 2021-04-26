@@ -5,8 +5,8 @@ body {
 
 .app {
   min-height: calc(100vh - 75px);
-  width: 92%;
-  padding: 19px 33px 49px 33px;
+  width: 90%;
+  padding: 19px 33px 85px 33px;
   display: flex;
   align-items: center;
   justify-content: center;
