@@ -1,53 +1,121 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import mondaySdk from "monday-sdk-js";
-import "monday-ui-react-core/dist/main.css"
+
 //Explore more Monday React Components here: https://style.monday.com/
-import AttentionBox from "monday-ui-react-core/dist/AttentionBox.js"
+import { searchByName } from "./utils/search";
+import { OverviewPart } from "./components/overview-part";
+import { TablePart } from "./components/table-part";
+import {
+  getContext,
+  getFullItems,
+  getItemName,
+  getSkinnyItems,
+} from "./services/monday.api";
+import { formatData } from "./utils/utils";
+import { Spinner } from "./components/spinner";
+import Tutorial from "./components/tutorial";
+import {
+  addToStorage,
+  getFromStorage,
+  removeFromStorage,
+} from "./utils/storage";
+import Info from "./components/info";
 
-const monday = mondaySdk();
+export const App = () => {
+  const [data, setData] = useState({
+    items: [],
+  });
+  const [fetching, setFetching] = useState(true);
+  const [showTutorial, setShowTutorial] = useState(() => {
+    const firstTime = getFromStorage();
+    return firstTime ? false : true;
+  });
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+  // data fetching //
+  const fetchContext = async () => {
+    const { data } = await getContext();
+    // setContext(data);
+    return data;
+  };
 
-    // Default state
-    this.state = {
-      data: {},
-      context: {
-      },
-      itemName: "",
-      name: "",
-    };
-  }
+  const fetchItemName = async (payload) => {
+    const {
+      data: { items },
+    } = await getItemName(payload);
+    return items[0].name;
+  };
 
-  componentDidMount() {
-    // TODO: set up event listeners
-    monday.get("context").then((res) => {
-      this.setState({context: res.data});
-      // console.log(this.state.context);
+  const fetchItems = async (name, limit) => {
+    const {
+      data: { items },
+    } = await getSkinnyItems(limit);
+    const searchItems = await searchByName(name, items, 20);
+    return searchItems;
+  };
 
-      monday.api(`query { items(ids:${+this.state.context.itemId}) { name } }`).then((res)=> {
-      this.setState({itemName: res.data.items[0].name});
-      console.log(this.state.itemName);
-    })
-    });
-    
-  monday.api(`query { me { name } boards { name  items { name created_at column_values { title text } } } }`).then((res) => {
-      this.setState({ data: res.data });
-      console.log(res);
-    });
-  }
+  const fetchFullItmes = async (items) => {
+    const { data } = await getFullItems(items);
+    return data;
+  };
 
-  render() {
-    return <div className="App">
-      <AttentionBox
-        title={"Hello Moveo Group!" }
-        text= {"Item name: " + this.state.itemName}
-        type="success"
-      />
-    </div>;
-  }
-}
+  const finishTutorial = () => {
+    addToStorage();
+    setShowTutorial(false);
+  };
+
+  const openTutorial = () => {
+    removeFromStorage();
+    setShowTutorial(true);
+  };
+
+  const renderContent = () => {
+    return fetching ? (
+      <Spinner />
+    ) : (
+      <div className="inner-wrapper">
+        <Info openTutorial={openTutorial} />
+        <OverviewPart
+          data={{
+            total: data.total,
+            median: data.median,
+            average: data.average,
+            min: data.min,
+            max: data.max,
+          }}
+        ></OverviewPart>
+        <TablePart data={data.items}></TablePart>
+      </div>
+    );
+  };
+
+  useEffect(() => {
+    let itemName = "";
+    async function fetchData() {
+      await fetchContext().then(async ({ itemId }) => {
+        await fetchItemName(itemId).then(async (res) => {
+          itemName = res;
+          await fetchItems(res, 50000).then(async (res) => {
+            await fetchFullItmes(res).then(async ({ items }) => {
+              setData(await formatData(itemName, items));
+              setFetching(false);
+            });
+          });
+        });
+      });
+    }
+
+    fetchData();
+  }, []);
+
+  return (
+    <div className="app">
+      {showTutorial ? (
+        <Tutorial finishTutorial={finishTutorial} />
+      ) : (
+        renderContent()
+      )}
+    </div>
+  );
+};
 
 export default App;

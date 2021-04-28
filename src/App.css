@@ -3,10 +3,12 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-.App {
-  height: 50vh;
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.app {
+  min-height: calc(100vh - 75px);
+  width: 93%;
+  padding: 19px 33px 85px 33px;
+}
+
+.app > .inner-wrapper {
+  width: 100%;
 }
