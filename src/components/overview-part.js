@@ -24,11 +24,14 @@ export const OverviewPart = ({ data }) => {
   );
 };
 
-const OverviewContainer = styled("div")``;
+const OverviewContainer = styled("div")`
+  margin-top: 24px;
+`;
 
 const Title = styled("div")`
   color: #fdab3d;
   font-size: 18px;
+  margin-bottom: 5px;
 `;
 
 const OverviewData = styled("div")`

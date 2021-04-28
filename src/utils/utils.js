@@ -25,10 +25,9 @@ export const formatItems = async (items) => {
           board: i.board.name,
           value: value ? +value : "Unset",
           createdAt: i.created_at,
-          creator: {
+          creator: i.creator && {
             name: i.creator.name,
             photo: i.creator.photo_thumb,
-            photoSmall: i.creator.photo_thumb_small,
             email: i.creator.email,
           },
         };

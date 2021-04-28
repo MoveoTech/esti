@@ -1,17 +1,23 @@
 import React from "react";
-import { Banner } from "monday-ui-react-core";
 import styled from "styled-components";
 
-export const CustomBanner = (props) => {
+export const CustomBanner = ({ creator }) => {
   return (
     <Container>
-      <Banner
-        id="Sandbox"
-        title={props.creator.name}
-        subtitle={props.creator.email}
-        imageSrc={props.creator.photo}
-        imagePosition={Banner.imagePosition.LEFT}
-      />
+      <div className="banner">
+        <img
+          src={
+            creator
+              ? creator.photo
+              : "https://cdn7.monday.com/icons/dapulse-person-column.svg"
+          }
+          alt="user"
+        />
+        <div className="info">
+          <span className="name">{creator ? creator.name : "Unknown"}</span>
+          <span className="email">{creator ? creator.email : null}</span>
+        </div>
+      </div>
     </Container>
   );
 };
@@ -22,28 +28,37 @@ const Container = styled("div")`
   display: flex;
   justify-content: center;
   bottom: 27px;
-  left: 16px;
 
-  .banner .banner--content {
+  .banner {
     padding: 20px;
     grid-column-gap: 20px;
     background-color: white;
     box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.15);
-  }
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-  .banner .banner--content .banner--title {
-    font-size: 18px;
-    height: auto;
-  }
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
 
-  .banner .banner--content .banner--subtitle {
-    font-size: 14px;
-    height: auto;
-  }
+    .info {
+      display: flex;
+      flex-direction: column;
 
-  .banner .banner--content .banner--image {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+      .name {
+        font-size: 1.2rem;
+        height: auto;
+      }
+
+      .email {
+        margin-top: 5px;
+        font-size: 0.8rem;
+        height: auto;
+      }
+    }
   }
 `;

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { shuffleColors } from "../utils/utils";
 
 const loadingTitles = [
   "Fetching Items..",
-  "Making Coffee..",
+  "Brewing Coffee..",
   "Estimating..",
-  "Calculating Earth's Circumfrance..",
+  "Calculating Pi..",
   "Sorting Best Matches..",
 ];
 
@@ -16,16 +15,13 @@ export const Spinner = () => {
   // current title to render
   const title = loadingTitles[counter];
 
-  // current color for title
-  const color = shuffleColors()[counter];
-
   useEffect(() => {
     const handleCounter = () => {
       setCounter(counter === loadingTitles.length - 1 ? 0 : counter + 1);
     };
-    setTimeout(handleCounter, 5000);
+    const timer = setTimeout(handleCounter, 2500);
     return () => {
-      clearTimeout(handleCounter);
+      clearTimeout(timer);
     };
   }, [counter]);
 
@@ -34,7 +30,7 @@ export const Spinner = () => {
       <div className="wrap">
         <div className="loading">
           <div className="bounceball"></div>
-          <Text color={color}>{title}</Text>
+          <Text>{title}</Text>
         </div>
       </div>
     </SpinnerWrapper>
@@ -42,15 +38,14 @@ export const Spinner = () => {
 };
 
 const SpinnerWrapper = styled("div")`
-  .wrap {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+  margin-top: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   .loading {
     width: 100%;
-    margin-left: 130px;
+    margin-left: 120px;
   }
 
   .bounceball {
@@ -96,7 +91,7 @@ const SpinnerWrapper = styled("div")`
 
 const Text = styled("div")`
   transition: all 0.3s ease-out;
-  color: ${(props) => props.color};
+  color: #00ca72;
   display: inline-block;
   margin-left: 15px;
   width: 250px;

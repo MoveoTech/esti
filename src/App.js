@@ -13,12 +13,23 @@ import {
 } from "./services/monday.api";
 import { formatData } from "./utils/utils";
 import { Spinner } from "./components/spinner";
+import Tutorial from "./components/tutorial";
+import {
+  addToStorage,
+  getFromStorage,
+  removeFromStorage,
+} from "./utils/storage";
+import Info from "./components/info";
 
 export const App = () => {
   const [data, setData] = useState({
     items: [],
   });
   const [fetching, setFetching] = useState(true);
+  const [showTutorial, setShowTutorial] = useState(() => {
+    const firstTime = getFromStorage();
+    return firstTime ? false : true;
+  });
 
   // data fetching //
   const fetchContext = async () => {
@@ -31,7 +42,6 @@ export const App = () => {
     const {
       data: { items },
     } = await getItemName(payload);
-    // setItemName(items[0].name);
     return items[0].name;
   };
 
@@ -46,6 +56,36 @@ export const App = () => {
   const fetchFullItmes = async (items) => {
     const { data } = await getFullItems(items);
     return data;
+  };
+
+  const finishTutorial = () => {
+    addToStorage();
+    setShowTutorial(false);
+  };
+
+  const openTutorial = () => {
+    removeFromStorage();
+    setShowTutorial(true);
+  };
+
+  const renderContent = () => {
+    return fetching ? (
+      <Spinner />
+    ) : (
+      <div className="inner-wrapper">
+        <Info openTutorial={openTutorial} />
+        <OverviewPart
+          data={{
+            total: data.total,
+            median: data.median,
+            average: data.average,
+            min: data.min,
+            max: data.max,
+          }}
+        ></OverviewPart>
+        <TablePart data={data.items}></TablePart>
+      </div>
+    );
   };
 
   useEffect(() => {
@@ -69,22 +109,10 @@ export const App = () => {
 
   return (
     <div className="app">
-      {fetching ? (
-        <Spinner />
+      {showTutorial ? (
+        <Tutorial finishTutorial={finishTutorial} />
       ) : (
-        // <Spinner />
-        <div className="inner-wrapper">
-          <OverviewPart
-            data={{
-              total: data.total,
-              median: data.median,
-              average: data.average,
-              min: data.min,
-              max: data.max,
-            }}
-          ></OverviewPart>
-          <TablePart data={data.items}></TablePart>
-        </div>
+        renderContent()
       )}
     </div>
   );

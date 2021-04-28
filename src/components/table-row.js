@@ -38,11 +38,17 @@ export const TableRow = ({ row, index }) => {
 
         <TitleContainer>
           <Avatar
-            src={row.creator.photo}
+            src={
+              row.creator
+                ? row.creator.photo
+                : `https://cdn7.monday.com/icons/dapulse-person-column.svg`
+            }
             onMouseOver={(e) => setShowHover(true)}
             onMouseLeave={(e) => setShowHover(false)}
           />
-          {showHover && <CustomBanner creator={row.creator}></CustomBanner>}
+          {showHover ? (
+            <CustomBanner creator={row.creator}></CustomBanner>
+          ) : null}
           <span>{row.title}</span>
         </TitleContainer>
 
@@ -90,7 +96,7 @@ const BoardLabel = styled("div")`
   padding-left: 6px;
   padding-right: 6px;
   background-color: ${(props) => props.color};
-  color: whitesmoke;
+  color: white;
   display: flex;
   align-items: center;
   border-radius: 4px;

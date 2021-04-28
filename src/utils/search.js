@@ -12,6 +12,7 @@ export const searchByName = async (name, items, limit) => {
         weight: 1,
       },
     ],
+    threshold: 0,
   };
 
   // create an index for our search
@@ -31,6 +32,7 @@ export const searchByColumnName = async (items) => {
         name: "title",
       },
     ],
+    threshold: 0.4,
   };
 
   const idx = Fuse.createIndex(options.keys, items);
