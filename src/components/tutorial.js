@@ -61,7 +61,7 @@ const Tutorial = ({ finishTutorial }) => {
       </CloseBtn>
       <ProgressWrapper>
         <div className="counter">
-          <b>{step} </b>/ 2
+          <span className="step">{step}</span> / 2
         </div>
         <ProgressBar progress={step}>
           <span className="bar">
@@ -118,6 +118,11 @@ const ProgressWrapper = styled("div")`
     font-size: 1rem;
     line-height: 2rem;
     text-align: center;
+
+    .step {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
   }
 `;
 
@@ -225,6 +230,7 @@ const NextBtn = styled("div")`
     cursor: pointer;
   }
 `;
+
 const BackBtn = styled("div")`
   border-radius: 4px;
   padding: 8px 16px;

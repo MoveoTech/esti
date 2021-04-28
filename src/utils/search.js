@@ -12,7 +12,6 @@ export const searchByName = async (name, items, limit) => {
         weight: 1,
       },
     ],
-    threshold: 0,
   };
 
   // create an index for our search
