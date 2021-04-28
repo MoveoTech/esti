@@ -1,10 +1,9 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import * as moment from "moment";
 import { CustomBanner } from "./banner";
 
 export const TableRow = ({ row, index }) => {
-
   moment.locale("en", {
     relativeTime: {
       future: "in %s",
@@ -37,10 +36,12 @@ export const TableRow = ({ row, index }) => {
           {moment(row.createdAt, "YYYYMMDDHHmmss").fromNow()}
         </TimeElapsed>
 
-        <TitleContainer
-          onMouseEnter={() => setShowHover(true)}
-          onMouseLeave={() => setShowHover(false)}>
-          <Avatar src={row.creator.photo} />
+        <TitleContainer>
+          <Avatar
+            src={row.creator.photo}
+            onMouseOver={(e) => setShowHover(true)}
+            onMouseLeave={(e) => setShowHover(false)}
+          />
           {showHover && <CustomBanner creator={row.creator}></CustomBanner>}
           <span>{row.title}</span>
         </TitleContainer>
@@ -49,14 +50,10 @@ export const TableRow = ({ row, index }) => {
           <BoardLabel color={row.board.color}>{row.board.name}</BoardLabel>
         </BoardLabelContainer>
 
-        <ValueTime>{row.value === "Unset" ? "-" : `${row.value}h`}</ValueTime>
+        <ValueTime>{row.value === "Unset" ? "-" : `${row.value}`}</ValueTime>
       </Row>
-
     </div>
   );
-
-
-
 };
 
 const Row = styled("div")`
@@ -114,7 +111,7 @@ const TitleContainer = styled("div")`
 `;
 
 const Avatar = styled("img")`
-  height: 30px;
+  width: 30px;
   border-radius: 20px;
   margin-right: 10px;
   border: 1px solid #f5f6f8;

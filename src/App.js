@@ -54,7 +54,7 @@ export const App = () => {
       await fetchContext().then(async ({ itemId }) => {
         await fetchItemName(itemId).then(async (res) => {
           itemName = res;
-          await fetchItems(res, 300000).then(async (res) => {
+          await fetchItems(res, 50000).then(async (res) => {
             await fetchFullItmes(res).then(async ({ items }) => {
               setData(await formatData(itemName, items));
               setFetching(false);
@@ -72,12 +72,15 @@ export const App = () => {
       {fetching ? (
         <Spinner />
       ) : (
+        // <Spinner />
         <div className="inner-wrapper">
           <OverviewPart
             data={{
               total: data.total,
               median: data.median,
               average: data.average,
+              min: data.min,
+              max: data.max,
             }}
           ></OverviewPart>
           <TablePart data={data.items}></TablePart>

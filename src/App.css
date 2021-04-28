@@ -5,11 +5,8 @@ body {
 
 .app {
   min-height: calc(100vh - 75px);
-  width: 90%;
+  width: 91%;
   padding: 19px 33px 85px 33px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .app > .inner-wrapper {

@@ -71,9 +71,13 @@ export const calculateAvg = (items) => {
   return Math.round(average);
 };
 
+export const shuffleColors = () => {
+  return _.shuffle(colors);
+};
+
 const assignColorByBoard = (items) => {
   const colorBoards = [];
-  const shuffledColors = _.shuffle(colors);
+  const shuffledColors = shuffleColors();
 
   return items.map((item, idx) => {
     const board = {
@@ -99,12 +103,26 @@ const assignColorByBoard = (items) => {
   });
 };
 
+const getMin = (items) => {
+  const values = items.map((i) => i.value).filter((v) => typeof v === "number");
+  if (!values.length > 0) return "Unset";
+  return Math.min(...values);
+};
+
+const getMax = (items) => {
+  const values = items.map((i) => i.value).filter((v) => typeof v === "number");
+  if (!values.length > 0) return "Unset";
+  return Math.max(...values);
+};
+
 export const formatData = async (name, items) => {
   const formattedItems = await formatItems(items);
   return {
     items: assignColorByBoard(sortByWeight(name, formattedItems)),
     average: calculateAvg(formattedItems),
     median: calculateMedian(formattedItems),
+    min: getMin(formattedItems),
+    max: getMax(formattedItems),
     total: formattedItems.length,
   };
 };
