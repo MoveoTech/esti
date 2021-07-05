@@ -3,8 +3,8 @@ import "./App.css";
 
 //Explore more Monday React Components here: https://style.monday.com/
 import { searchByName } from "./utils/search";
-import { OverviewPart } from "./components/overview-part";
-import { TablePart } from "./components/table-part";
+import { OverviewPart } from "./components/overview/OverviewPart";
+import { TablePart } from "./components/table/table-part/TablePart";
 import {
   getContext,
   getFullItems,
@@ -12,18 +12,24 @@ import {
   getSkinnyItems,
 } from "./services/monday.api";
 import { formatData } from "./utils/utils";
-import { Spinner } from "./components/spinner";
-import Tutorial from "./components/tutorial";
+import { Spinner } from "./components/spinner/Spinner";
+import Tutorial from "./components/tutorial/Tutorial";
 import {
   addToStorage,
   getFromStorage,
   removeFromStorage,
 } from "./utils/storage";
-import Info from "./components/info";
+import Info from "./components/info/Info";
+import { SlimMondayItem, TableDataToDisplay } from "./types/esti.types";
 
 export const App = () => {
-  const [data, setData] = useState({
+  const [data, setData] = useState<TableDataToDisplay>({
     items: [],
+    average: "Unset",
+    total: "Unset",
+    median: "Unset",
+    min: "Unset",
+    max: "Unset",
   });
   const [fetching, setFetching] = useState(true);
   const [showTutorial, setShowTutorial] = useState(() => {
@@ -38,14 +44,16 @@ export const App = () => {
     return data;
   };
 
-  const fetchItemName = async (payload) => {
+  const fetchItemName = async (payload: number) => {
+    console.log(payload);
     const {
       data: { items },
     } = await getItemName(payload);
     return items[0].name;
   };
 
-  const fetchItems = async (name, limit) => {
+  const fetchItems = async (name: string, limit: number) => {
+    console.log(name, limit);
     const {
       data: { items },
     } = await getSkinnyItems(limit);
@@ -53,7 +61,8 @@ export const App = () => {
     return searchItems;
   };
 
-  const fetchFullItmes = async (items) => {
+  const fetchFullItmes = async (items: { item: SlimMondayItem }[]) => {
+    console.log(items);
     const { data } = await getFullItems(items);
     return data;
   };
@@ -94,7 +103,7 @@ export const App = () => {
       await fetchContext().then(async ({ itemId }) => {
         await fetchItemName(itemId).then(async (res) => {
           itemName = res;
-          await fetchItems(res, 50000).then(async (res) => {
+          await fetchItems(res, 500000).then(async (res) => {
             await fetchFullItmes(res).then(async ({ items }) => {
               setData(await formatData(itemName, items));
               setFetching(false);

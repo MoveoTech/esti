@@ -1,9 +1,23 @@
 import React, { useState } from "react";
-import styled from "styled-components";
-import * as moment from "moment";
-import { CustomBanner } from "./banner";
+import moment from "moment";
 
-export const TableRow = ({ row, index }) => {
+import { MondayItem } from "../../../types/esti.types";
+import { CustomBanner } from "../../banner/Banner";
+import {
+  Row,
+  TimeElapsed,
+  ValueTime,
+  TitleContainer,
+  Avatar,
+  BoardLabel,
+  BoardLabelContainer,
+} from "./style";
+
+interface TableRowProps {
+  row: MondayItem;
+  index: number;
+}
+export const TableRow = ({ row, index }: TableRowProps) => {
   moment.locale("en", {
     relativeTime: {
       future: "in %s",
@@ -61,64 +75,3 @@ export const TableRow = ({ row, index }) => {
     </div>
   );
 };
-
-const Row = styled("div")`
-  height: 54px;
-  border-bottom: 1px solid #c5c7cf;
-  font-size: 14px;
-  color: #323338;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  .icon {
-    margin-right: 4px;
-    display: flex;
-    height: 14.5px;
-    width: 14.5px;
-  }
-`;
-
-const TimeElapsed = styled("div")`
-  display: flex;
-  width: clamp(30px, 45px, 65px);
-  padding-right: 20px;
-`;
-
-const BoardLabelContainer = styled("div")`
-  width: fit-content;
-  min-width: 100px;
-  display: flex;
-`;
-
-const BoardLabel = styled("div")`
-  height: 24px;
-  padding-left: 6px;
-  padding-right: 6px;
-  background-color: ${(props) => props.color};
-  color: white;
-  display: flex;
-  align-items: center;
-  border-radius: 4px;
-  width: fit-content;
-`;
-
-const ValueTime = styled("div")`
-  margin-left: auto;
-  padding-right: 10px;
-  /* margin-left: 30px; */
-`;
-
-const TitleContainer = styled("div")`
-  display: flex;
-  align-items: center;
-  width: calc(100% / 2);
-  position: relative;
-`;
-
-const Avatar = styled("img")`
-  width: 30px;
-  border-radius: 20px;
-  margin-right: 10px;
-  border: 1px solid #f5f6f8;
-`;

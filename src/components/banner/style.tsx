@@ -1,27 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-export const CustomBanner = ({ creator }) => {
-  return (
-    <Container>
-      <div className="banner">
-        <img
-          src={
-            creator
-              ? creator.photo
-              : "https://cdn7.monday.com/icons/dapulse-person-column.svg"
-          }
-          alt="user"
-        />
-        <div className="info">
-          <span className="name">{creator ? creator.name : "Unknown"}</span>
-          <span className="email">{creator ? creator.email : null}</span>
-        </div>
-      </div>
-    </Container>
-  );
-};
-const Container = styled("div")`
+export const BannerContainer = styled("div")`
   position: absolute;
   width: fit-content;
   min-width: 100px;

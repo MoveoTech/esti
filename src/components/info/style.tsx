@@ -1,25 +1,6 @@
-import React from "react";
 import styled from "styled-components";
 
-const Info = ({ openTutorial }) => {
-  return (
-    <InfoContainer>
-      <img src={`/assets/info-icon.svg`} alt="info" />
-      <span
-        className="info-text"
-        onClick={() => {
-          openTutorial();
-        }}
-      >
-        Not seeing any results?
-      </span>
-    </InfoContainer>
-  );
-};
-
-export default Info;
-
-const InfoContainer = styled("div")`
+export const InfoContainer = styled("div")`
   display: flex;
   align-items: center;
 
