@@ -1,6 +1,8 @@
+import moment from "moment";
+import _ from "lodash";
+
 import { searchByColumnName, sortByWeight } from "./search";
 import { colors } from "../constants/colors";
-import _ from "lodash";
 
 export const formatTitle = (title) => {
   const formattedTitle = title.split(" ").join(" | =");
@@ -12,6 +14,23 @@ export const filterNumericColumns = (columns) => {
 };
 
 export const formatItems = async (items) => {
+  moment.locale("en", {
+    relativeTime: {
+      future: "in %s",
+      past: "%s",
+      s: "s",
+      m: "1m",
+      mm: "%dm",
+      h: "1h",
+      hh: "%dh",
+      d: "1d",
+      dd: "%dd",
+      M: "1M",
+      MM: "%dM",
+      y: "1y",
+      yy: "%dy",
+    },
+  });
   const formattedItems = await Promise.all(
     items.map(async (i) => {
       let value;
@@ -24,7 +43,7 @@ export const formatItems = async (items) => {
           title: i.name,
           board: i.board.name,
           value: value ? +value : "Unset",
-          createdAt: i.created_at,
+          createdAt: moment(i.created_at).fromNow(),
           creator: i.creator && {
             name: i.creator.name,
             photo: i.creator.photo_thumb,
