@@ -45,7 +45,6 @@ export const App = () => {
   };
 
   const fetchItemName = async (payload: number) => {
-    console.log(payload);
     const {
       data: { items },
     } = await getItemName(payload);
@@ -53,7 +52,6 @@ export const App = () => {
   };
 
   const fetchItems = async (name: string, limit: number) => {
-    console.log(name, limit);
     const {
       data: { items },
     } = await getSkinnyItems(limit);
@@ -62,7 +60,6 @@ export const App = () => {
   };
 
   const fetchFullItmes = async (items: { item: SlimMondayItem }[]) => {
-    console.log(items);
     const { data } = await getFullItems(items);
     return data;
   };

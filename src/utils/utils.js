@@ -18,7 +18,7 @@ export const formatItems = async (items) => {
     relativeTime: {
       future: "in %s",
       past: "%s",
-      s: "s",
+      s: "%ds",
       m: "1m",
       mm: "%dm",
       h: "1h",
