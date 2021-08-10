@@ -9,6 +9,7 @@ import {
   Footer,
   NextBtn,
   BackBtn,
+  Disclaimer,
 } from "./style";
 
 interface TutorialProps {
@@ -61,9 +62,21 @@ const Tutorial = ({ finishTutorial }: TutorialProps) => {
         <span className="text">
           <span className="app-title">Esti</span> can only assist you if your
           time estimation column is <span className="emphasis">numeric</span>{" "}
-          and has <span className="emphasis">Actual </span>in it's name.
+          and its name includes <span className="emphasis">"Actual Days"</span>{" "}
+          or <span className="emphasis">"Actual Hours"</span>.
+          <br />
         </span>
-        <img src={`/assets/tutorial.gif`} alt="tutorial gif" />
+        <img
+          className="tutorial-img"
+          src={`/assets/tutorial.gif`}
+          alt="tutorial gif"
+        />
+        <Disclaimer>
+          <img src={`/assets/info-icon.svg`} alt="info" />
+          <span className="disclaimer-text">
+            Please note that for calculation purposes - a day equals 9 hours.
+          </span>
+        </Disclaimer>
       </StepTwo>
     );
   };

@@ -111,18 +111,31 @@ export const StepTwo = styled("div")`
     font-size: 1rem;
     line-height: 24px;
     text-align: center;
-    max-width: 430px;
+    max-width: 475px;
 
     .emphasis {
-      color: #e2445c;
+      color: #ff642e;
       font-weight: 600;
     }
   }
 
-  img {
+  .tutorial-img {
     margin-top: 15px;
-    width: 70%;
+    width: 100%;
     margin-bottom: 20px;
+  }
+`;
+
+export const Disclaimer = styled("div")`
+  display: flex;
+  align-items: center;
+  .disclaimer-text {
+    color: #808185;
+    font-size: 14px;
+    line-height: 16px;
+    margin-left: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   }
 `;
 

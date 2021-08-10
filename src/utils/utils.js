@@ -35,14 +35,19 @@ export const formatItems = async (items) => {
     items.map(async (i) => {
       let value;
       await searchByColumnName(i.column_values).then((res) => {
-        if (res.length > 0) value = res[0].item.text;
+        if (res.length > 0) {
+          if (res[0].item.title.toLowerCase().includes("actual hours"))
+            value = +res[0].item.text;
+          else if (res[0].item.title.toLowerCase().includes("actual days"))
+            value = +res[0].item.text * 9;
+        }
       });
       if (typeof value !== "undefined")
         return {
           id: i.id,
           title: i.name,
           board: i.board.name,
-          value: value ? +value : "Unset",
+          value: value ? value : "Unset",
           createdAt: moment(i.created_at).fromNow(),
           creator: i.creator && {
             name: i.creator.name,
@@ -143,4 +148,15 @@ export const formatData = async (name, items) => {
     max: getMax(formattedItems),
     total: formattedItems.length,
   };
+};
+
+export const formatTime = (value, timeFormat) => {
+  switch (timeFormat) {
+    case "d": {
+      const res = (value / 9).toFixed(2).replace(/\.00$/, "");
+      return `${res}d`;
+    }
+    default:
+      return `${value}h`;
+  }
 };

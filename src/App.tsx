@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import "monday-ui-react-core/dist/main.css";
 
 //Explore more Monday React Components here: https://style.monday.com/
 import { searchByName } from "./utils/search";
@@ -20,7 +21,11 @@ import {
   removeFromStorage,
 } from "./utils/storage";
 import Info from "./components/info/Info";
-import { SlimMondayItem, TableDataToDisplay } from "./types/esti.types";
+import {
+  SlimMondayItem,
+  TableDataToDisplay,
+  TimeFormat,
+} from "./types/esti.types";
 
 export const App = () => {
   const [data, setData] = useState<TableDataToDisplay>({
@@ -32,6 +37,7 @@ export const App = () => {
     max: "Unset",
   });
   const [fetching, setFetching] = useState(true);
+  const [timeFormat, setTimeFormat] = useState<TimeFormat>("h");
   const [showTutorial, setShowTutorial] = useState(() => {
     const firstTime = getFromStorage();
     return firstTime ? false : true;
@@ -74,6 +80,10 @@ export const App = () => {
     setShowTutorial(true);
   };
 
+  const switchTimeFormat = (payload: TimeFormat) => {
+    setTimeFormat(payload);
+  };
+
   const renderContent = () => {
     return fetching ? (
       <Spinner />
@@ -88,8 +98,10 @@ export const App = () => {
             min: data.min,
             max: data.max,
           }}
+          switchTimeFormat={switchTimeFormat}
+          timeFormat={timeFormat}
         ></OverviewPart>
-        <TablePart data={data.items}></TablePart>
+        <TablePart data={data.items} timeFormat={timeFormat}></TablePart>
       </div>
     );
   };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
-import { MondayItem } from "../../../types/esti.types";
+import { MondayItem, TimeFormat } from "../../../types/esti.types";
+import { formatTime } from "../../../utils/utils";
 import { CustomBanner } from "../../banner/Banner";
 import {
   Row,
@@ -14,9 +15,10 @@ import {
 
 interface TableRowProps {
   row: MondayItem;
+  timeFormat: TimeFormat;
   index: number;
 }
-export const TableRow = ({ row, index }: TableRowProps) => {
+export const TableRow = ({ row, timeFormat, index }: TableRowProps) => {
   const [showHover, setShowHover] = useState(false);
 
   return (
@@ -51,7 +53,9 @@ export const TableRow = ({ row, index }: TableRowProps) => {
           <BoardLabel color={row.board.color}>{row.board.name}</BoardLabel>
         </BoardLabelContainer>
 
-        <ValueTime>{row.value === "Unset" ? "-" : `${row.value}`}</ValueTime>
+        <ValueTime>
+          {row.value === "Unset" ? "-" : `${formatTime(row.value, timeFormat)}`}
+        </ValueTime>
       </Row>
     </div>
   );

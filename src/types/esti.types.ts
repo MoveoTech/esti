@@ -59,3 +59,5 @@ export interface MondayColumn {
 export interface TableDataToDisplay extends Overview {
   items: MondayItem[];
 }
+
+export type TimeFormat = "h" | "d";

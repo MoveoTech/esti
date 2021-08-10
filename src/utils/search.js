@@ -1,6 +1,5 @@
 import Fuse from "fuse.js";
 import { formatTitle } from "./utils";
-import { COLUMN_SEARCH_QUERY } from "../constants/constants";
 
 export const searchByName = async (name, items, limit) => {
   // options for the fuse collection
@@ -38,7 +37,9 @@ export const searchByColumnName = async (items) => {
 
   const fuse = new Fuse(items, options, idx);
 
-  return fuse.search(COLUMN_SEARCH_QUERY);
+  return fuse.search({
+    $or: [{ title: `="actual hours"` }, { title: `="actual days"` }],
+  });
 };
 
 export const sortByWeight = (name, items) => {

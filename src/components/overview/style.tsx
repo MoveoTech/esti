@@ -7,7 +7,16 @@ export const OverviewContainer = styled("div")`
 export const Title = styled("div")`
   color: #fdab3d;
   font-size: 18px;
-  margin-bottom: 5px;
+`;
+
+export const OverviewHeader = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .time-format-input {
+    width: 150px;
+  }
 `;
 
 export const OverviewData = styled("div")`
